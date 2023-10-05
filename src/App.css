@@ -1,0 +1,72 @@
+
+#root {
+  max-width: 1400px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: content-box;
+  background:black; 
+  color: white;
+}
+
+
+body {
+  background: black !important;
+  background-size: 200% 200%;
+  animation: gradientAnimation 5s linear infinite;
+  color: white;
+}
+
+.tablist:active{
+  background: yellow !important;
+}
+
+
+.table-content th, .table-content td {
+  color: white;
+}
+.table-content td {
+  border:none;
+  padding-bottom: 1px;
+}
+
+#start{
+  text-align: start !important;
+}
+
+#end{
+  text-align: end !important;
+}
+
+#radius{
+  border: 3px solid #F8AD18;
+  
+}
+
+#boton{
+  background: transparent !important;
+  color: white;
+}
+
+.radio{
+  border-radius: 20px !important;
+}
+
+#espacio{
+  padding-bottom: 5px !important;
+}
+
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
