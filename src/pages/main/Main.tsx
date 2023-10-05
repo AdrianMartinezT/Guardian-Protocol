@@ -39,7 +39,7 @@ function Main() {
                   <HStack>
                     <Button
                       as={Link}
-                      to="https://github.com/Guardian-Protocol/GuardianProtocol"
+                      to="/main"
                       size="lg"
                       borderRadius="0"
                       backgroundColor="black"
@@ -53,7 +53,7 @@ function Main() {
                     <Button
                       className="fade-in"
                       as={Link}
-                      to="/main"
+                      to="https://github.com/Guardian-Protocol/GuardianProtocol"
                       size="lg"
                       borderRadius="0px"
                       backgroundColor="black"
