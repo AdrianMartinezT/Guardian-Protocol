@@ -160,17 +160,18 @@ const metaFT =
           h="500px"
         >
           <TabList mb="1em">
-            <Tab _selected={{ bg: "#F8AD18" }} borderBottom="2px solid #F8AD18">
+            <Tab _selected={{ bg: "#F8AD18" }} borderBottom="2px solid #F8AD18" borderRadius="0" > 
               Stake
             </Tab>
             <Tab
               _selected={{ bg: "#F8AD18" }}
               borderBottom="2px solid #F8AD18"
               borderRight="2px solid #F8AD18"
+              borderRadius="0"
             >
               Unstake
             </Tab>
-            <Tab _selected={{ bg: "#F8AD18" }} borderBottom="2px solid #F8AD18">
+            <Tab _selected={{ bg: "#F8AD18" }} borderBottom="2px solid #F8AD18 " borderRadius="0">
               Withdraw
             </Tab>
           </TabList>
@@ -193,7 +194,7 @@ const metaFT =
                       <Td isNumeric textAlign="end">
                         Available: {account?.balance.value} VARA
                       </Td>
-                    </Grid>
+                  </Grid>
 
                     <Grid templateColumns="1fr auto" gap="4">
                       <Tr
@@ -321,47 +322,73 @@ const metaFT =
                   className="table-content"
                 >
                   <Tbody>
-                    <Tr id="espacio" style={{ marginBottom: "3px !important" }}>
+                    
+                    
+
+            <Grid templateColumns="1fr auto" gap="4">
+            <Tr id="espacio" style={{ marginBottom: "3px !important" }}>
                       <Td>Amount</Td>
                       <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end">
+                      
+           </Tr>  
+                    <Td isNumeric textAlign="end">
                         Available: {gVARAbalance} gVARA
-                      </Td>
-                    </Tr>
+                      </Td>        
+            </Grid>
 
-                    <Tr
-                      borderRadius="20px"
-                      textColor="white"
-                      marginBottom="5px"
-                      style={{ color: "white", border: "3px solid #F8AD18" }}
-                    >
-                      <Td position="revert">
-                        <Input
-                          w="300px"
-                          h="60px"
-                          type="text"
-                          borderColor="black"
-                          value={stakeamount}
-                          onChange={AmountInputChange}
-                        />
-                        <Button
-                          onClick={maxamountgvara}
-                          backgroundColor="yellow.500"
-                          position="inherit"
-                          marginBottom="7px"
-                        >
-                          MAX
-                        </Button>
-                      </Td>
-                    </Tr>
 
+            <Grid templateColumns="1fr auto" gap="4">
+                      <Tr
+                        borderRadius="20px"
+                        textColor="white"
+                        marginBottom="5px"
+                        style={{ color: "white", border: "2px solid #F8AD18" }}
+                      >
+                        <Td position="revert">
+                          <Input
+                            w="300px"
+                            h="40px"
+                            type="text"
+                            borderColor="black"
+                            focusBorderColor="#F8AD18"
+                            _hover={{
+                              borderColor: "#F8AD18",
+                            }}
+                            value={stakeamount}
+                            onChange={AmountInputChange}
+                          />
+                          
+                        </Td>
+                      </Tr>
+                          <Td>
+                          <Button
+                            onClick={maxamountvara}
+                            backgroundColor="yellow.500"
+                            position="inherit"
+                            marginBottom="7px"
+                          >
+                            MAX
+                          </Button>  
+                          </Td>    
+            </Grid>
+
+
+
+                    
+
+            <Grid templateColumns="1fr auto" gap="4">
                     <Tr textColor="white">
                       <Td fontWeight="bold">You will recieve</Td>
                       <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end" fontWeight="bold">
-                        {stakeamount} VARA
-                      </Td>
+                      
                     </Tr>
+                    <Td isNumeric textAlign="end" fontWeight="bold">
+                        {stakeamount} VARA
+                    </Td>
+            </Grid>
+
+
+                    
 
                     <Tr style={{ visibility: "hidden" }}>
                       <Td>.</Td>
@@ -369,33 +396,49 @@ const metaFT =
                       <Td isNumeric>.</Td>
                     </Tr>
 
+
+                    <Grid templateColumns="1fr auto" gap="4">
                     <Tr textColor="white">
                       <Td>Stake APY%</Td>
                       <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end">
+                      
+                    </Tr>
+                    <Td isNumeric textAlign="end">
                         4.00%
                       </Td>
-                    </Tr>
+                    </Grid>
 
+                    
+                
+                    <Grid templateColumns="1fr auto" gap="4">
                     <Tr textColor="white">
                       <Td>Staking Fee</Td>
                       <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end">
+                      
+                    </Tr>
+                    <Td isNumeric textAlign="end">
                         0.0%
                       </Td>
-                    </Tr>
+                    
+                    
+                    </Grid>
 
-                    <Tr textColor="white">
-                      <Td>Reward Fee</Td>
-                      <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end">
-                        10%
-                      </Td>
-                    </Tr>
+                    <Grid templateColumns="1fr auto" gap="4">
+
+                        <Tr textColor="white">
+                          <Td>Reward Fee</Td>
+                          <Td style={{ visibility: "hidden" }}>.</Td>
+                          
+                        </Tr>  
+                        <Td isNumeric textAlign="end">
+                            10%
+                          </Td> 
+                    </Grid>
+                    
 
                     <Tr>
                       
-                     <Td width="100%" display="flex" justifyContent="center" marginLeft='19vh' >
+                    <Td width="100%" display="flex" justifyContent="center" marginLeft='10vh' >
                         <Button
                           colorScheme="teal"
                           size="lg"
@@ -424,76 +467,115 @@ const metaFT =
                   className="table-content"
                 >
                   <Tbody>
-                    <Tr id="espacio" style={{ marginBottom: "3px !important" }}>
+                    
+                    
+
+            <Grid templateColumns="1fr auto" gap="4">
+            <Tr id="espacio" style={{ marginBottom: "3px !important" }}>
                       <Td>Amount</Td>
                       <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end">
-                        Available: {account?.balance.value} VARA
-                      </Td>
+                      
+           </Tr>  
+                    <Td isNumeric textAlign="end">
+                        Available: {gVARAbalance} gVARA
+                      </Td>        
+            </Grid>
+
+
+            <Grid templateColumns="1fr auto" gap="4">
+                      <Tr
+                        borderRadius="20px"
+                        textColor="white"
+                        marginBottom="5px"
+                        style={{ color: "white", border: "2px solid #F8AD18" }}
+                      >
+                        <Td position="revert">
+                          <Input
+                            w="300px"
+                            h="40px"
+                            type="text"
+                            borderColor="black"
+                            focusBorderColor="#F8AD18"
+                            _hover={{
+                              borderColor: "#F8AD18",
+                            }}
+                            value={stakeamount}
+                            onChange={AmountInputChange}
+                          />
+                          
+                        </Td>
+                      </Tr>
+                          <Td>
+                          <Button
+                            onClick={maxamountvara}
+                            backgroundColor="yellow.500"
+                            position="inherit"
+                            marginBottom="7px"
+                          >
+                            MAX
+                          </Button>  
+                          </Td>    
+            </Grid>
+
+
+                    <Tr style={{ visibility: "hidden" }}>
+                      <Td>.</Td>
+                      <Td>.</Td>
+                      <Td isNumeric>.</Td>
                     </Tr>
 
-                    <Tr
-                      borderRadius="20px"
-                      textColor="white"
-                      marginBottom="5px"
-                      style={{ color: "white", border: "3px solid #F8AD18" }}
-                    >
-                      <Td position="revert">
-                        <Input
-                          w="300px"
-                          h="60px"
-                          type="text"
-                          borderColor="black"
-                          value={stakeamount}
-                          onChange={AmountInputChange}
-                        />
-                        <Button
-                          onClick={maxamountgvara}
-                          backgroundColor="yellow.500"
-                          position="inherit"
-                          marginBottom="7px"
-                        >
-                          MAX
-                        </Button>
-                      </Td>
-                    </Tr>
 
+                    <Grid templateColumns="1fr auto" gap="4">
                     <Tr textColor="white">
                       <Td>Stake APY%</Td>
                       <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end">
+                      
+                    </Tr>
+                    <Td isNumeric textAlign="end">
                         4.00%
                       </Td>
-                    </Tr>
+                    </Grid>
 
+                    
+                
+                    <Grid templateColumns="1fr auto" gap="4">
                     <Tr textColor="white">
                       <Td>Staking Fee</Td>
                       <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end">
+                      
+                    </Tr>
+                    <Td isNumeric textAlign="end">
                         0.0%
                       </Td>
-                    </Tr>
+                    
+                    
+                    </Grid>
 
-                    <Tr textColor="white">
-                      <Td>Reward Fee</Td>
-                      <Td style={{ visibility: "hidden" }}>.</Td>
-                      <Td isNumeric textAlign="end">
-                        10%
-                      </Td>
-                    </Tr>
+                    <Grid templateColumns="1fr auto" gap="4">
+
+                        <Tr textColor="white">
+                          <Td>Reward Fee</Td>
+                          <Td style={{ visibility: "hidden" }}>.</Td>
+                          
+                        </Tr>  
+                        <Td isNumeric textAlign="end">
+                            10%
+                          </Td> 
+                    </Grid>
+                    
 
                     <Tr>
                       
-                    <Td width="100%" display="flex" justifyContent="center" marginLeft='19vh' >
+                    <Td width="100%" display="flex" justifyContent="center" marginLeft='10vh' >
                         <Button
-                          textColor="white"
+                          colorScheme="teal"
                           size="lg"
                           style={{
-                            color: "white",
+                            color: "black",
                             background: "#F8AD18",
-                            width: "220px",
-                            marginLeft: "43px",
+                            width: "240px",
                           }}
+                          onClick={() => signer(unstakemessage)}
                         >
                           Withdraw
                         </Button>
