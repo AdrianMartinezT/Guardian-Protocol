@@ -13,13 +13,14 @@ import {
   Input,
   GridItem,
   Center,
-  Flex,
   Grid,
+  
 } from "@chakra-ui/react";
 import { useApi, useAlert, useAccount } from "@gear-js/react-hooks";
 import { useState,useEffect } from "react";
 import { web3FromSource } from "@polkadot/extension-dapp";
 import { ProgramMetadata, encodeAddress } from "@gear-js/api";
+import { BalanceStakingCard } from "./BalanceStaking";
 
 
 function Home() {
@@ -37,7 +38,7 @@ function Home() {
 
  // Add your programID
  const programIDFT =
- "0xe609506126c6eedd004d964396c52668420916c7f0164af50b40652175ca2641";
+ "0xbd3ef805336b5bd3552e3cea769de31754d58a07bcdfca92031ba668c485d83b";
 
 // Add your metadata.txt
 const metaFT =
@@ -76,15 +77,15 @@ const metaFT =
 
   // Add your programID
   const programID =
-    "0x604379d79c45a4ef9e66d0ea4745e7f413dc58ccda7aa73653ddb1090c22712e";
+    "0x59021cb04f10eae1685a7828adecb6eb096b4bd2961c6a5604a40b146cb96f58";
 
   // Add your metadata.txt
   const meta =
-    "00010001000000000001040000000106000000000000000107000000b5072c000808696f18496e69744654000004013466745f70726f6772616d5f696404011c4163746f72496400000410106773746418636f6d6d6f6e287072696d6974697665731c4163746f724964000004000801205b75383b2033325d000008000003200000000c000c0000050300100808696f444c69717569645374616b65416374696f6e000108145374616b6504001401107531323800000020576974686472617704001401107531323800010000140000050700180808696f404c69717569645374616b654576656e740001083c5375636365737366756c5374616b65000000445375636365737366756c556e7374616b65000100001c0808696f34496f4c69717569645374616b6500001c01146f776e657204011c4163746f7249640001547374616b696e675f746f6b656e5f6164647265737304011c4163746f72496400015876617261746f6b656e5f746f74616c5f7374616b65641401107531323800014c746f74616c5f74696d655f70726f746f636f6c20010c7536340001606776617261746f6b656e735f7265776172645f746f74616c14011075313238000144646973747269627574696f6e5f74696d6520010c75363400011475736572732401505665633c284163746f7249642c2075313238293e00002000000506002400000228002800000408041400";
+    "0001000100000000000104000000010600000000000000010700000005082c000808696f18496e69744654000004013466745f70726f6772616d5f696404011c4163746f72496400000410106773746418636f6d6d6f6e287072696d6974697665731c4163746f724964000004000801205b75383b2033325d000008000003200000000c000c0000050300100808696f444c69717569645374616b65416374696f6e000108145374616b650400140110753132380000001c556e7374616b6504001401107531323800010000140000050700180808696f404c69717569645374616b654576656e740001083c5375636365737366756c5374616b65000000445375636365737366756c556e7374616b65000100001c0808696f34496f4c69717569645374616b6500002001146f776e657204011c4163746f7249640001547374616b696e675f746f6b656e5f6164647265737304011c4163746f72496400015876617261746f6b656e5f746f74616c5f7374616b656414011075313238000130696e697469616c5f74696d6520010c75363400014c746f74616c5f74696d655f70726f746f636f6c20010c7536340001606776617261746f6b656e735f7265776172645f746f74616c14011075313238000144646973747269627574696f6e5f74696d6520010c75363400011475736572732401505665633c284163746f7249642c2075313238293e00002000000506002400000228002800000408041400";
 
   const metadata = ProgramMetadata.from(meta);
 
-  const unstakemessage = { withdraw: Math.floor(stakeamount) };
+  const unstakemessage = { unstake: Math.floor(stakeamount) };
 
   const rewardsemessage = { withdraw: Math.floor(stakeamount) };
 
@@ -103,25 +104,55 @@ const metaFT =
     const message: any = {
       destination: programID, // programId
       payload: inmessage,
-      gasLimit: 899819245,
+      gasLimit: 609981924500,
       value: 0,
     };
 
     const localaccount = account?.address;
     const isVisibleAccount = accounts.some(
       (visibleAccount) => visibleAccount.address === localaccount
-    );
+    ); 
 
     if (isVisibleAccount) {
       // Create a message extrinsic
 
       try {
-        const transferExtrinsic = await api.message.send(message, metadata);
+        
+        const unstakextrinsic = api.tx.staking.unbond(
+          Number(stakeamount) * 1000000000000
+        );
+  
+  
+          const stakingextrinsic = api.tx.staking.bond(
+            account?.address ?? alert.success("No Account"),
+            Number(stakeamount) * 1000000000000,
+            "Staked"
+          );
+  
+        
+          const contractExtrinsic = await api.message.send(message, metadata);
+  
+          let batchTx;
+  
+          if ('stake' in inmessage){
+  
+  
+            console.log("Soy STAKE");
+            
+            batchTx = api.tx.utility.batch([ stakingextrinsic, contractExtrinsic]);
+  
+          }else {
+  
+            console.log("Soy UNSTAKE");
+  
+            batchTx = api.tx.utility.batch([unstakextrinsic, contractExtrinsic]);
+  
+          }
 
         const injector = await web3FromSource(accounts[0].meta.source);
-        transferExtrinsic
+        batchTx
           .signAndSend(
-            accounts[0].address,
+            account?.address ?? alert.error("No account"),
             { signer: injector.signer },
             ({ status }: any) => {
               if (status.isInBlock) {
@@ -152,7 +183,7 @@ const metaFT =
   };
 
   return (
-    <GridItem  w="100%" h="300px">
+    <GridItem  w="100%" h="300px"   >
       <Center>
         <Tabs isFitted variant='enclosed'
           style={{ color: "white", border: "2px solid #F8AD18" }}
@@ -175,8 +206,9 @@ const metaFT =
               Withdraw
             </Tab>
           </TabList>
-
+        
           <TabPanels>
+            <Center>
             <TabPanel>
               <TableContainer>
                 <Table
@@ -313,7 +345,9 @@ const metaFT =
                 </Table>
               </TableContainer>
             </TabPanel>
+            </Center>   
 
+           <Center>               
             <TabPanel>
               <TableContainer>
                 <Table
@@ -458,7 +492,10 @@ const metaFT =
                 </Table>
               </TableContainer>
             </TabPanel>
+            </Center>
 
+
+            <Center>
             <TabPanel>
               <TableContainer>
                 <Table
@@ -586,11 +623,13 @@ const metaFT =
                 </Table>
               </TableContainer>
             </TabPanel>
+            </Center>
           </TabPanels>
         </Tabs>
       </Center>
     </GridItem>
+
+    
   );
 }
-
 export { Home };
