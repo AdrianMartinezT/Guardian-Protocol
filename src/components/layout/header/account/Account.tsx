@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import { useAccount } from '@gear-js/react-hooks';
 import { Button } from '@chakra-ui/react';
+import { BalanceStakingCard } from 'pages/home/BalanceStaking';
 import { AccountsModal } from './accounts-modal';
 import { Wallet } from './wallet';
-
-
-
-
 
 function Account() {
   const { account, accounts } = useAccount();
@@ -22,6 +19,7 @@ function Account() {
 
   return (
     <>
+    <BalanceStakingCard/> 
       {account ? (
         <Wallet balance={account.balance} address={account.address} name={account.meta.name} onClick={openModal} />
       ) : (
