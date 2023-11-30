@@ -1,46 +1,36 @@
-import type { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { useState } from 'react';
 import { useAccount } from '@gear-js/react-hooks';
-import { isLoggedIn } from 'utils';
-import { LOCAL_STORAGE } from 'consts';
-import { AccountButton } from '../account-button';
-import styles from './Accounts.module.scss';
+import { Button } from '@chakra-ui/react';
+import { BalanceStakingCard } from 'pages/home/BalanceStaking';
+import { AccountsModal } from './accounts-modal';
+import { Wallet } from './wallet';
 
-type Props = {
-  list: InjectedAccountWithMeta[];
-  onChange: () => void;
-};
 
-function Accounts({ list, onChange }: Props) {
-  const { login } = useAccount();
-  const isAnyAccount = list.length > 0;
 
-  const handleAccountButtonClick = (account: InjectedAccountWithMeta) => {
-    login(account);
-    localStorage.setItem(LOCAL_STORAGE.ACCOUNT, account.address);
-    onChange();
+
+function Account() {
+  const { account, accounts } = useAccount();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  const getAccounts = () =>
-    list.map((account) => (
-      <li key={account.address}>
-        <AccountButton
-          address={account.address}
-          name={account.meta.name}
-          isActive={isLoggedIn(account)}
-          onClick={() => handleAccountButtonClick(account)}
-          block
-        />
-      </li>
-    ));
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
-  return isAnyAccount ? (
-    <ul className={styles.list}>{getAccounts()}</ul>
-  ) : (
-    <p>
-      No accounts found. Please open Polkadot extension, create a new account or import existing one and reload the
-      page.
-    </p>
+  return (
+    <>
+    <BalanceStakingCard/> 
+      {account ? (
+        <Wallet balance={account.balance} address={account.address} name={account.meta.name} onClick={openModal} />
+      ) : (
+        <Button backgroundColor="#F8AD18" color='white' onClick={openModal}> Connect Your Wallet</Button>
+      )}
+      {isModalOpen && <AccountsModal accounts={accounts} close={closeModal} />}
+    </>
   );
 }
 
-export { Accounts };
+export { Account };
